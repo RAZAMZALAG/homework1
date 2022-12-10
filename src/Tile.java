@@ -1,21 +1,24 @@
 public class Tile {
-    int valueTile;
-    Tile(int value) {
-        valueTile = value;
-        System.out.print(value);
+    int val;
+    Tile(int val) {
+        this.val = val;
     }
 
+    @Override
+    public String toString() {
+        return Integer.toString(this.val);
+    }
 
     public int getValueTile() {
-        return valueTile;
+        return val;
 
     }
 
-    public Tile setValueTile(int valueTile) {
-        this.valueTile = valueTile;
-
-            return null;
-    }
+//    public Tile setValueTile(int val) {
+//        this.val = val;
+//
+//            return null;
+//    }
 }
 /*
     @Override

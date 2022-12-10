@@ -23,8 +23,7 @@ public class Action {
     }
 
     public String toString(){
-        String x =  "Move" + tile + direction;
-        System.out.println(x);
+        String x =  "Move " + tile + " " + direction;
         return x;
     }
 
