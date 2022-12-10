@@ -1,18 +1,57 @@
-
-
+import java.util.Arrays;
 
 ///**
 // * 1. פעולה לבדוק אם הגענו למצב מטרה או לא. אם האריח לא נמצא במקומו מחזיר ערך false אם הכל במקום עד איבר אחד לפני הסוף (כי האיבר האחרון הוא אפס לכן לא בודקת אותו) תחזיר trure
 // */
 public class State {
     private Board currentBoard;
-    private Board prevBoard;
+    //    private Board prevBoard;
     private Action action;
+    private int size;
 
-    State(Board currentBoard, Board prevBoard, Action action) {
+    State(Board currentBoard, Action action) {
         this.action = action;
-        this.prevBoard = prevBoard;
+//        this.prevBoard = prevBoard;
         this.currentBoard = currentBoard;
+        this.size = this.currentBoard.getBoard().length;
+
+    }
+
+    private Tile[][] copyBoard(){
+        Tile[][] newBoard = new Tile[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                newBoard[i][j] = currentBoard.getBoard()[i][j];
+            }
+        }
+        return newBoard;
+    }
+
+
+    public void result (Action newAction){
+
+
+        Tile[][] newBoard = copyBoard();
+        this.currentBoard.getBoard()[0][0]=null;
+
+//        System.out.println("new board: " + Arrays.toString(newBoard[0]));
+//        System.out.println("sec board: " + this.currentBoard);
+
+        int [] numLoc = findNumber(newBoard, newAction.getTile().getVal());
+        int numCol; int numRow;
+        numRow = numLoc[0];
+        numCol = numLoc[1];
+        //upswach
+        Tile temp =   newBoard[numLoc[0]][numLoc[1]];
+        newBoard[numRow][numCol] = newBoard[numRow-1][numCol];
+        newBoard[numRow-1][numCol] = temp;
+
+
+        for (int i = 0; i < newBoard.length; i++) {
+            System.out.println(Arrays.toString(newBoard[i]));
+
+
+        }
     }
 
     public boolean isGoal() {
@@ -35,8 +74,79 @@ public class State {
         return true;
     }
 
+    public Action[] actions() {
+        Tile[][] brd = this.currentBoard.getBoard();
+        int[] emptyLoc = findEmpty(brd);
+        //System.out.println("empty loc: " + Arrays.toString(emptyLoc));
 
-    
+
+        Action[] actionsArray = new Action[4];
+        int rows = emptyLoc[0];
+        int cols = emptyLoc[1];
+        int counter = 0;
+
+        //check up
+        if (rows < size - 1) {
+            Tile belowTile = brd[rows + 1][cols];
+            actionsArray[0] = new Action(belowTile, Direction.up);
+            counter++;
+            //      System.out.println("actionsarray: " + Arrays.toString(actionsArray));
+        }
+        //check down
+        if (rows > 0) {
+            Tile upperTile = brd[rows - 1][cols];
+            actionsArray[1] = new Action(upperTile, Direction.down);
+            counter++;
+            //     System.out.println("actionsarray: " + Arrays.toString(actionsArray));
+        }
+        //check right
+        if (cols > 0) {
+            Tile leftTile = brd[rows][cols - 1];
+            actionsArray[2] = new Action(leftTile, Direction.right);
+            counter++;
+            //    System.out.println("actionsarray: " + Arrays.toString(actionsArray));
+        }
+        //check left
+        if (cols < size - 1) {
+            Tile rightTile = brd[rows][cols + 1];
+            actionsArray[3] = new Action(rightTile, Direction.left);
+            counter++;
+            //      System.out.println("actionsarray: " + Arrays.toString(actionsArray));
+        }
+
+        //    System.out.println("actions: " + Arrays.toString(actionsArray));
+        Action[] finalArray = new Action[counter];
+
+        int ctr2 = 0;
+        for (int i = 0; i < 4; i++) {
+            if (actionsArray[i] != null) {
+                finalArray[ctr2] = actionsArray[i];
+                ctr2++;
+            }
+
+        }
+        //      System.out.println(Arrays.toString(finalArray));
+        return finalArray;
+    }
+    private int[] findEmpty(Tile[][] brd) {
+    return findNumber(brd,0);
+    }
+
+    private int[] findNumber(Tile[][] brd,int number) {
+        int size = brd.length;
+        int[] out = new int[2];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (brd[i][j].getVal() == number) {
+                    out[0] = i;
+                    out[1] = j;
+                }
+
+            }
+
+        }
+        return out;
+    }
 
 
 }

@@ -7,6 +7,9 @@ public class Board {
 
     private Tile[][] board;
 
+    Board(Tile[][] newBoard){
+        this.board=newBoard;
+    }
     Board(String boardString) {
 //        "7 5 4|0 3 2|8 6 1"
 

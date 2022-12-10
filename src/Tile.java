@@ -4,6 +4,10 @@ public class Tile {
         this.val = val;
     }
 
+    public int getVal() {
+        return val;
+    }
+
     @Override
     public String toString() {
         return Integer.toString(this.val);

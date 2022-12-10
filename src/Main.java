@@ -1,25 +1,54 @@
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
+//
+//        //test 1
+//        Tile b = new Tile(6);
+//        Direction dir = Direction.up;
+//        Action a = new Action(b, dir);
+//        System.out.println(a);
+//
+//        //test 2
+//        Board brd = new Board("6 4 7|8 0 5|3 2 1");
+//        System.out.println("stringBord: " +brd);
+//
+//        //test 3
+//        Board brd2 = new Board("1 2 3|4 5 6|7 8 0");
+//        State st1 = new State(brd,  null);
+//        State st2 = new State(brd2,  null);
+//        System.out.println("brd1 " + brd);
+//        System.out.println(st1.isGoal());
+//        System.out.println("brd2 " + brd2);
+//        System.out.println(st2.isGoal());
+//
+//        //test3 - find zero
+//        //test4 - actionsarray
+//
+////        st1.actions();
+////        st2.actions();
+//        System.out.println("move middle zero: "+ Arrays.toString(st1.actions()));
+//        System.out.println("move middle zero: "+ Arrays.toString(st2.actions()));
 
-        //test 1
-        Tile b = new Tile(6);
-        Direction dir = Direction.up;
-        Action a = new Action(b, dir);
-        System.out.println(a);
+        //test5 - new board type
+        Board brd5 = new Board(new Board("1 2 3|4 0 6|7 8 5").getBoard()) ;
+        System.out.println("board new way:" + brd5);
 
-        //test 2
-        Board brd = new Board("6 4 7|8 5 0|3 2 1");
-        System.out.println("stringBord: " +brd);
+        //result test
+        State newState = new State(brd5, null);
+        Action[] actionsArr= newState.actions();
+        newState.result(actionsArr[0]);
 
-        //test 3
-        Board brd2 = new Board("1 2 3|4 5 6|7 8 0");
-        State st1 = new State(brd, null, null);
-        State st2 = new State(brd2, null, null);
-        System.out.println("brd1 " + brd);
-        System.out.println(st1.isGoal());
-        System.out.println("brd2 " + brd2);
-        System.out.println(st2.isGoal());
+
+
+
+
+
+
+
+
+
 
 
 
