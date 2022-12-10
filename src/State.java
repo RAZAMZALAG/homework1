@@ -28,9 +28,7 @@ public class State {
     }
 
 
-    public void result (Action newAction){
-
-
+    public State result (Action newAction){
         Tile[][] newBoard = copyBoard();
         this.currentBoard.getBoard()[0][0]=null;
 
@@ -41,17 +39,33 @@ public class State {
         int numCol; int numRow;
         numRow = numLoc[0];
         numCol = numLoc[1];
-        //upswach
         Tile temp =   newBoard[numLoc[0]][numLoc[1]];
-        newBoard[numRow][numCol] = newBoard[numRow-1][numCol];
-        newBoard[numRow-1][numCol] = temp;
-
-
-        for (int i = 0; i < newBoard.length; i++) {
-            System.out.println(Arrays.toString(newBoard[i]));
-
-
+        //switch
+        if (newAction.getDirection() == Direction.up) {
+            newBoard[numRow][numCol] = newBoard[numRow - 1][numCol];
+            newBoard[numRow - 1][numCol] = temp;
         }
+        if (newAction.getDirection() == Direction.down) {
+            newBoard[numRow][numCol] = newBoard[numRow + 1][numCol];
+            newBoard[numRow + 1][numCol] = temp;
+        }
+        if (newAction.getDirection() == Direction.right) {
+            newBoard[numRow][numCol] = newBoard[numRow][numCol+1];
+            newBoard[numRow][numCol+1] = temp;
+        }
+        if (newAction.getDirection() == Direction.left) {
+            newBoard[numRow][numCol] = newBoard[numRow][numCol-1];
+            newBoard[numRow][numCol-1] = temp;
+        }
+        State newState = new State(new Board(newBoard), newAction);
+
+
+//        for (int i = 0; i < newBoard.length; i++) {
+//            System.out.println(Arrays.toString(newBoard[i]));
+//
+//
+//        }
+        return newState;
     }
 
     public boolean isGoal() {
@@ -132,7 +146,7 @@ public class State {
     return findNumber(brd,0);
     }
 
-    private int[] findNumber(Tile[][] brd,int number) {
+    public int[] findNumber(Tile[][] brd,int number) {
         int size = brd.length;
         int[] out = new int[2];
         for (int i = 0; i < size; i++) {
@@ -148,8 +162,35 @@ public class State {
         return out;
     }
 
+    @Override
+    public String toString() {
+        return "State{" +
+                "currentBoard=" + currentBoard +
+                ", action=" + this.action +
+                ", size=" + size +
+                '}';
+    }
+
+
+    public Board getCurrentBoard() {
+        return currentBoard;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public int getSize() {
+        return size;
+    }
 
 }
+
+
+
+
+
+
 //    Direction direction;
 //    Tile tile;
 //
