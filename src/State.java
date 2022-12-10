@@ -5,27 +5,38 @@
 // * 1. פעולה לבדוק אם הגענו למצב מטרה או לא. אם האריח לא נמצא במקומו מחזיר ערך false אם הכל במקום עד איבר אחד לפני הסוף (כי האיבר האחרון הוא אפס לכן לא בודקת אותו) תחזיר trure
 // */
 public class State {
-    private Board board;
-    // 
+    private Board currentBoard;
+    private Board prevBoard;
+    private Action action;
 
+    State(Board currentBoard, Board prevBoard, Action action) {
+        this.action = action;
+        this.prevBoard = prevBoard;
+        this.currentBoard = currentBoard;
+    }
 
     public boolean isGoal() {
-        Tile[][] tiles = board.getBoard();
-        boolean isGoalAchieved;
+        Tile[][] board = this.currentBoard.getBoard();
+        int size = board.length;
         int value = 1, i, j;
-        for (i = 0; i < tiles.length; i++) {
-            for (j = 0; j < tiles.length; j++) {
-                if (tiles[i][j].getValueTile() != value) {
-                    isGoalAchieved = false;
-                    return isGoalAchieved;
+        for (i = 0; i < size - 1; i++) {
+            for (j = 0; j < size; j++) {
+                if (board[i][j].getValueTile() != i * size + j + 1) {
+                    return false;
                 }
             }
         }
-        isGoalAchieved = true;
-        return isGoalAchieved;
+        // last row
+        for (int k = 0; k < size - 1; k++) {
+            if (board[size - 1][k].getValueTile() != i * size + k + 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
+    
 
 
 }

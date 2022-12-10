@@ -14,6 +14,13 @@ public class Main {
 
         //test 3
         Board brd2 = new Board("1 2 3|4 5 6|7 8 0");
+        State st1 = new State(brd, null, null);
+        State st2 = new State(brd2, null, null);
+        System.out.println("brd1 " + brd);
+        System.out.println(st1.isGoal());
+        System.out.println("brd2 " + brd2);
+        System.out.println(st2.isGoal());
+
 
 
     }
